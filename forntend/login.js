@@ -4,7 +4,7 @@ document.getElementById('loginForm').addEventListener('submit', function (event)
     var username = document.getElementById('username').value;
     var password = document.getElementById('password').value;
 
-    // Fetch hash time for the user
+    
     fetch('http://localhost:8000/hash_time/?username=' + username)
         .then(response => response.json())
         .then(data => {
@@ -28,7 +28,6 @@ document.getElementById('loginForm').addEventListener('submit', function (event)
                     if (response.ok) {
                         console.log('Login successful!');
                         displayMessage('Login successful!', 'success');
-                        // Redirect to a success page or perform any desired action
                     } else {
                         console.error('Login failed.');
                         displayMessage('Login failed.', 'error');
@@ -64,23 +63,19 @@ async function sha256(plain) {
     return hashArray.map(byte => byte.toString(16).padStart(2, '0')).join('');
 }
 
-function displayMessage(message, type) {
-    // Remove any existing messages
+function displayMessage(message, type){
     var messageElement = document.getElementById('message');
     if (messageElement) {
         messageElement.parentNode.removeChild(messageElement);
     }
-
-    // Create a new message element
+    
     messageElement = document.createElement('div');
     messageElement.id = 'message';
     messageElement.textContent = message;
     messageElement.classList.add('message-' + type);
 
-    // Append the message element to the body
     document.body.appendChild(messageElement);
 
-    // Automatically remove the message after 3 seconds
     setTimeout(function () {
         messageElement.parentNode.removeChild(messageElement);
     }, 3000);
